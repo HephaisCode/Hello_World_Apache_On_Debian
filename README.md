@@ -45,6 +45,9 @@ Install Apache as WebServer to communicate with your server at **hello-world.hep
 
 ```
 apt-get -y install apache2
+apt-get -y install apache2-doc
+apt-get -y install apache2-suexec-custom
+apt-get -y install logrotate
 systemctl restart apache2
 ```
 
