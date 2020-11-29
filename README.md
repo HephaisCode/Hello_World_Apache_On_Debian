@@ -276,7 +276,19 @@ systemctl restart apache2
 
 ```
 apt-get -y install certbot python-certbot-apache
+```
 
+You mus disable the default SSL redirection from apache :
+```
+
+a2dissite 000-default-le-ssl.conf
+
+systemctl restart apache2
+
+```
+Then you can certifiate your website
+
+```
 certbot --agree-tos -n --no-eff-email --apache --redirect --email ${MYEMAIL} -d ${MYDOMAINNAME}
 
 systemctl restart apache2
