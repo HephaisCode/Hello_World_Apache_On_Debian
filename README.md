@@ -40,6 +40,7 @@ Always to be update.
 apt-get update
 apt-get -y upgrade
 apt-get -y dist-upgrade
+
 ```
 
 ## Install Apache
@@ -53,17 +54,18 @@ apt-get -y install apache2-suexec-custom
 apt-get -y install logrotate
 apt-get -y install openssl
 systemctl restart apache2
+
 ```
 
 Active Apache modules
 
 ```
-systemctl restart apache2
 a2enmod ssl
 a2enmod userdir
 a2enmod suexec
 a2enmod http2
 systemctl restart apache2
+
 ```
 
 Configure Apache
@@ -75,6 +77,7 @@ sed -i '$ a ServerSignature Off' /etc/apache2/apache2.conf
 sed -i 's/^.*SSLProtocol .*$//g' /etc/apache2/apache2.conf
 sed -i '$ a SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1' /etc/apache2/apache2.conf
 systemctl restart apache2
+
 ```
 
 Configure Default Apache by rewrite virtualhost
