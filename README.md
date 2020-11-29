@@ -53,6 +53,19 @@ apt-get -y install apache2-doc
 apt-get -y install apache2-suexec-custom
 apt-get -y install logrotate
 systemctl restart apache2
+a2enmod ssl
+a2enmod userdir
+a2enmod suexec
+a2enmod http2
+systemctl restart apache2
+sed -i 's/\\/var\\/www/\\/home/g' /etc/apache2/suexec/www-data
+sed -i 's/^.*ServerSignature .*$//g' /etc/apache2/apache2.conf
+sed -i '$ a ServerSignature Off' /etc/apache2/apache2.conf
+sed -i 's/^.*SSLProtocol .*$//g' /etc/apache2/apache2.conf
+sed -i '$ a SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1' /etc/apache2/apache2.conf
+chgrp -R www-data /var/www/html/
+chmod 750 /var/www/html/
+systemctl restart apache2
 ```
  
  ## Define our parameters
