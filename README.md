@@ -83,7 +83,6 @@ Configure Default Apache by rewrite virtualhost
 chgrp -R www-data /var/www/html/
 chmod 750 /var/www/html/
 
-echo "<?php echo phpinfo();?>" > /var/www/html/phpinfo.php
 echo "<html><body>Are you lost? Ok, I'll help you, you're in front of a screen...</body></html>" > /var/www/html/index.html
 
 rm /etc/apache2/sites-available/000-default-le-ssl.conf
@@ -115,6 +114,25 @@ Open browser and go to page http://51.83.45.10/
 
 Open browser and go to page https://51.83.45.10/
  
+ ## Install PHP
+
+Install PHP with Apache
+
+```
+apt-get -y install php7.3-fpm
+a2dismod php7.3
+a2enconf php7.3-fpm
+a2enmod proxy_fcgi
+echo "<?php echo phpinfo();?>" > /var/www/html/phpinfo.php
+systemctl restart apache2
+```
+
+Test Apache 
+
+Open browser and go to page http://51.83.45.10/phpinfo.php
+
+Open browser and go to page https://51.83.45.10/phpinfo.php
+
  ## Define our parameters
  
  ```
@@ -125,7 +143,7 @@ Open browser and go to page https://51.83.45.10/
  MYWEBFOLDER=WebSite
  ```
  
- ## Create user
+ ## Create user ${MYUSER}
  
  ```
 useradd --shell /bin/false ${MYUSER}
@@ -142,9 +160,9 @@ mkdir /home/${MYUSER}/
 
 mkdir /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 rm /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
-echo "<?php echo phpinfo();?>" >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
+echo '<?php echo phpinfo();?>' >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
 rm /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
-echo '<html><body>Hello World! You are NOT secure! Please use <a href="https://hello-world.hephaiscode.com">SSL connexion</a>!' >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
+echo '<html><body>Hello World! You are NOT secure! Please use <a href="https://hello-world.hephaiscode.com">SSL connexion</a>!</body></html>' >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
 chown -R ${MYUSER}:www-data /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 
@@ -155,8 +173,8 @@ chown -R ${MYUSER}:www-data /home/${MYUSER}/ssl
 chmod -R 750 /home/${MYUSER}/ssl
 
 mkdir /home/${MYUSER}/${MYWEBFOLDER}_SSL
-echo "<?php echo phpinfo();?>" >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/phpinfo.php
-echo "Hello World! You are secure!" >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/index.html
+echo '<?php echo phpinfo();?>' >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/phpinfo.php
+echo '<html><body>Hello World! You are secure!</body></html>" >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/index.html
 chown -R ${MYUSER}:www-data /home/${MYUSER}/${MYWEBFOLDER}_SSL
 chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_SSL
 ```
@@ -233,7 +251,11 @@ systemctl restart apache2
 
 Open browser and go to page http://hello-world.hephaiscode.com 
 
-Open browser and go to page https://hello-world.hephaiscode.com (cetificat is private)
+Open browser and go to page http://hello-world.hephaiscode.com/phpinfo.php
+
+Open browser and go to page https://hello-world.hephaiscode.com (certificat is valided by certbot)
+
+Open browser and go to page https://hello-world.hephaiscode.com/phpinfo.php (certificat is valided by certbot)
 
 ## Hello World Success
 
