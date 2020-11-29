@@ -132,10 +132,12 @@ Install PHP with Apache
 
 ```
 apt-get -y install php7.3-fpm
+
 a2dismod php7.3
 a2enconf php7.3-fpm
 a2enmod proxy_fcgi
 
+rm /var/www/html/phpinfo.php
 echo "<?php echo phpinfo();?>" > /var/www/html/phpinfo.php
 
 systemctl restart apache2
