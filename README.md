@@ -220,6 +220,15 @@ a2ensite ${MYDOMAINNAME}_SSL.conf
 systemctl restart apache2
 ```
 
+## Add ssl certificat by Certbot
+
+```
+apt-get -y install certbot python-certbot-apache
+certbot --agree-tos -n --no-eff-email --apache --redirect --email ${MYEMAIL} -d ${MYDOMAINNAME}
+systemctl restart apache2
+
+```
+
 ## Hello World Test
 
 Open browser and go to page http://hello-world.hephaiscode.com 
