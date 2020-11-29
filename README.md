@@ -75,8 +75,6 @@ Configure Apache
 sed -i 's/\/var\/www/\/home/g' /etc/apache2/suexec/www-data
 sed -i 's/^.*ServerSignature .*$//g' /etc/apache2/apache2.conf
 sed -i '$ a ServerSignature Off' /etc/apache2/apache2.conf
-sed -i 's/^.*SSLProtocol .*$//g' /etc/apache2/apache2.conf
-sed -i '$ a SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1' /etc/apache2/apache2.conf
 
 systemctl restart apache2
 
