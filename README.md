@@ -92,6 +92,7 @@ Configure Default Apache by rewrite virtualhost
 chgrp -R www-data /var/www/html/
 chmod 750 /var/www/html/
 
+rm /var/www/html/index.html
 echo "<html><body>Are you lost? Ok, I'll help you, you're in front of a screen...</body></html>" > /var/www/html/index.html
 
 mkdir /var/www/ssl
