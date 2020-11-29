@@ -26,6 +26,7 @@ We use :
 Open terminal or console and go to admin your server.
 
 ```
+ssh-keygen -R 51.83.45.10
 ssh -l root 51.83.45.10 
 ```
 
