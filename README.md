@@ -124,43 +124,46 @@ echo "LogLevel error" >> ${MYAPACHECONFNOSSL}
 echo "ErrorLog /var/log/apache2/${MYDOMAINNAME}-nossl-error.log" >> ${MYAPACHECONFNOSSL}
 echo "CustomLog /var/log/apache2/${MYDOMAINNAME}-nossl-access.log combined env=NoLog" >> ${MYAPACHECONFNOSSL}
 echo "</VirtualHost>" >> ${MYAPACHECONFNOSSL}
-a2ensite ${MYAPACHECONFNOSSL}
+a2ensite ${MYDOMAINNAME}_NOSSL.conf
 systemctl restart apache2
 
 
 MYAPACHECONFSSL=/etc/apache2/sites-available/${MYDOMAINNAME}_SSL.conf
 rm ${MYAPACHECONFSSL}
-echo "<IfModule mod_ssl.c>" >> ${MYAPACHECONFNOSSL}
-echo "<VirtualHost *:80>" >> ${MYAPACHECONFNOSSL}
-echo "Protocols h2 http/1.1" >> ${MYAPACHECONFNOSSL}
-echo "ServerAdmin ${MYEMAIL}" >> ${MYAPACHECONFNOSSL}
-echo "ServerName ${MYDOMAINNAME}" >> ${MYAPACHECONFNOSSL}
-echo "ServerAlias ${MYDOMAINNAME}" >> ${MYAPACHECONFNOSSL}
-echo "DocumentRoot /home/${MYUSER}/${MYWEBFOLDER}_SSL+ "" >> ${MYAPACHECONFNOSSL}
-echo "<Directory />" >> ${MYAPACHECONFNOSSL}
-echo "AllowOverride All" >> ${MYAPACHECONFNOSSL}
-echo "</Directory>" >> ${MYAPACHECONFNOSSL}
-echo "<Directory /home/${MYUSER}/${MYWEBFOLDER}_SSL+ ">" >> ${MYAPACHECONFNOSSL}
-echo "Options Indexes FollowSymLinks MultiViews" >> ${MYAPACHECONFNOSSL}
-echo "AllowOverride all" >> ${MYAPACHECONFNOSSL}
-echo "Require all granted" >> ${MYAPACHECONFNOSSL}
-echo "</Directory>" >> ${MYAPACHECONFNOSSL}
-echo "LogLevel error" >> ${MYAPACHECONFNOSSL}
-echo "ErrorLog /var/log/apache2/${MYDOMAINNAME}-ssl-error.log" >> ${MYAPACHECONFNOSSL}
-echo "CustomLog /var/log/apache2/${MYDOMAINNAME}-ssl-access.log combined env=NoLog" >> ${MYAPACHECONFNOSSL}
-echo "SSLEngine On" >> ${MYAPACHECONFNOSSL}
-echo "SSLCipherSuite ALL:!DH:!EXPORT:!RC4:+HIGH:+MEDIUM:!LOW:!aNULL:!eNULL" >> ${MYAPACHECONFNOSSL}
-echo "SSLCertificateFile /home/${MYUSER}/ssl/${MYDOMAINNAME}.crt" >> ${MYAPACHECONFNOSSL}
-echo "SSLCertificateKeyFile /home/${MYUSER}/ssl/${MYDOMAINNAME}.key" >> ${MYAPACHECONFNOSSL}
-echo "</VirtualHost>" >> ${MYAPACHECONFNOSSL}
-echo "</IfModule>" >> ${MYAPACHECONFNOSSL}
-a2ensite ${MYAPACHECONFNOSSL}
+echo "<IfModule mod_ssl.c>" >> ${MYAPACHECONFSSL}
+echo "<VirtualHost *:80>" >> ${MYAPACHECONFSSL}
+echo "Protocols h2 http/1.1" >> ${MYAPACHECONFSSL}
+echo "ServerAdmin ${MYEMAIL}" >> ${MYAPACHECONFSSL}
+echo "ServerName ${MYDOMAINNAME}" >> ${MYAPACHECONFSSL}
+echo "ServerAlias ${MYDOMAINNAME}" >> ${MYAPACHECONFSSL}
+echo "DocumentRoot /home/${MYUSER}/${MYWEBFOLDER}_SSL" >> ${MYAPACHECONFSSL}
+echo "<Directory />" >> ${MYAPACHECONFSSL}
+echo "AllowOverride All" >> ${MYAPACHECONFSSL}
+echo "</Directory>" >> ${MYAPACHECONFSSL}
+echo "<Directory /home/${MYUSER}/${MYWEBFOLDER}_SSL" >> ${MYAPACHECONFSSL}
+echo "Options Indexes FollowSymLinks MultiViews" >> ${MYAPACHECONFSSL}
+echo "AllowOverride all" >> ${MYAPACHECONFSSL}
+echo "Require all granted" >> ${MYAPACHECONFSSL}
+echo "</Directory>" >> ${MYAPACHECONFSSL}
+echo "LogLevel error" >> ${MYAPACHECONFSSL}
+echo "ErrorLog /var/log/apache2/${MYDOMAINNAME}-ssl-error.log" >> ${MYAPACHECONFSSL}
+echo "CustomLog /var/log/apache2/${MYDOMAINNAME}-ssl-access.log combined env=NoLog" >> ${MYAPACHECONFSSL}
+echo "SSLEngine On" >> ${MYAPACHECONFSSL}
+echo 'SSLCipherSuite ALL:!DH:!EXPORT:!RC4:+HIGH:+MEDIUM:!LOW:!aNULL:!eNULL' >> ${MYAPACHECONFSSL}
+echo "SSLCertificateFile /home/${MYUSER}/ssl/${MYDOMAINNAME}.crt" >> ${MYAPACHECONFSSL}
+echo "SSLCertificateKeyFile /home/${MYUSER}/ssl/${MYDOMAINNAME}.key" >> ${MYAPACHECONFSSL}
+echo "</VirtualHost>" >> ${MYAPACHECONFSSL}
+echo "</IfModule>" >> ${MYAPACHECONFSSL}
+a2ensite ${MYDOMAINNAME}_SSL.conf
 systemctl restart apache2
 ```
 
-## Hello World Success
+## Hello World Test
+
 Open browser and go to page http://hello-world.hephaiscode.com 
 
 Open browser and go to page https://hello-world.hephaiscode.com (cetificat is private)
+
+## Hello World Success
 
 ![Success](https://img.shields.io/badge/Hello%20World-OK-Green.svg)
