@@ -53,20 +53,64 @@ apt-get -y install apache2-doc
 apt-get -y install apache2-suexec-custom
 apt-get -y install logrotate
 systemctl restart apache2
+```
+
+Active Apache modules
+
+```
+systemctl restart apache2
 a2enmod ssl
 a2enmod userdir
 a2enmod suexec
 a2enmod http2
 systemctl restart apache2
+```
+
+Configure Apache
+
+```
 sed -i 's/\/var\/www/\/home/g' /etc/apache2/suexec/www-data
 sed -i 's/^.*ServerSignature .*$//g' /etc/apache2/apache2.conf
 sed -i '$ a ServerSignature Off' /etc/apache2/apache2.conf
 sed -i 's/^.*SSLProtocol .*$//g' /etc/apache2/apache2.conf
 sed -i '$ a SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1' /etc/apache2/apache2.conf
-chgrp -R www-data /var/www/html/
-chmod 750 /var/www/html/
 systemctl restart apache2
 ```
+
+Configure Default Apache by rewrite virtualhost
+
+```
+chgrp -R www-data /var/www/html/
+chmod 750 /var/www/html/
+
+rm /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '<IfModule mod_ssl.c>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '$ a <VirtualHost *:443>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '$ a ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '$ a DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '$ a ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '$ a CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '$ a </VirtualHost>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '$ a </IfModule>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+a2dissite 000-default-le-ssl.conf
+
+rm /etc/apache2/sites-available/000-default.conf
+echo ''$ a <VirtualHost *:80>' >> /etc/apache2/sites-available/000-default.conf
+echo ''$ a ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-default.conf
+echo ''$ a DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default.conf
+echo ''$ a ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default.conf
+echo ''$ a CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default.conf
+echo ''$ a </VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
+a2ensite 000-default.conf
+
+systemctl restart apache2
+```
+
+Test Apache 
+
+Open browser and go to page http://51.83.45.10/
+
+Open browser and go to page https://51.83.45.10/
  
  ## Define our parameters
  
@@ -101,7 +145,7 @@ chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 
 
 mkdir /home/${MYUSER}/ssl
-openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /home/${MYUSER}/ssl/${MYDOMAINNAME}.key -out /home/${MYUSER}/ssl/${MYDOMAINNAME}.crt -subj "/C=FR/ST=LILLE/L=LILLE/O=Global Security/OU=IT Department/CN=${MYUSER}"
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /home/${MYUSER}/ssl/${MYDOMAINNAME}.key -out /home/${MYUSER}/ssl/${MYDOMAINNAME}.crt -subj "/C=FR/ST=KNOWHERE/L=KNOWHERE/O=Global Security/OU=IT Department/CN=${MYUSER}"
 chown -R ${MYUSER}:www-data /home/${MYUSER}/ssl
 chmod -R 750 /home/${MYUSER}/ssl
 
