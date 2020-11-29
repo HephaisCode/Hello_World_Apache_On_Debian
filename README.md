@@ -6,7 +6,7 @@
 
 ## Objectif 
 
-Create Web Page for **hello-world.hephaiscode.com** with Apache and HTML File. Access by URL  https://hello-world.hephaiscode.com .
+Create Web Page for **hello-world.hephaiscode.com** with Apache and HTML File. Access by URL  http://hello-world.hephaiscode.com .
 
 ## You need
 
