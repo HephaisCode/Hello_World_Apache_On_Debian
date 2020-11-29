@@ -60,7 +60,8 @@ systemctl restart apache2
 ## Hello World Script
 
 ```
-echo "<html><body>Hello World!</body></html>" >> /home/helloworld/index.html
+rm /home/helloworld/index.html
+echo '<html><body>Hello World!</body></html>' >> /home/helloworld/index.html
 ```
 
 ## Hello World Success
