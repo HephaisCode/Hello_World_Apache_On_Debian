@@ -135,10 +135,9 @@ mkdir /home/${MYUSER}/
 
 mkdir /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 
-rm /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
-echo '<?php echo phpinfo();?>' >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
 rm /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
 echo '<html><body>Hello World!</body></html>' >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
+
 chown -R ${MYUSER}:www-data /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 
