@@ -83,6 +83,9 @@ Configure Default Apache by rewrite virtualhost
 chgrp -R www-data /var/www/html/
 chmod 750 /var/www/html/
 
+echo "<?php echo phpinfo();?>" > /var/www/html/phpinfo.php
+echo "<html><body>Are you lost? Ok, I'll help you, you're in front of a screen...</body></html>" > /var/www/html/index.html
+
 rm /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '<IfModule mod_ssl.c>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '$ a <VirtualHost *:443>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
