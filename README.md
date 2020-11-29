@@ -177,7 +177,7 @@ chmod -R 750 /home/${MYUSER}/ssl
 
 mkdir /home/${MYUSER}/${MYWEBFOLDER}_SSL
 echo '<?php echo phpinfo();?>' >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/phpinfo.php
-echo '<html><body>Hello World! You are secure!</body></html>" >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/index.html
+echo '<html><body>Hello World! You are secure!</body></html>' >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/index.html
 chown -R ${MYUSER}:www-data /home/${MYUSER}/${MYWEBFOLDER}_SSL
 chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_SSL
 ```
