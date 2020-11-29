@@ -1,7 +1,7 @@
 # Hello World Apache On Debian
-[![OS badge](https://img.shields.io/badge/OS-Debian-red.svg)]
-[![Server badge](https://img.shields.io/badge/Server-Apache-blue.svg)]
-[![Format badge](https://img.shields.io/badge/Format-HTML-blue.svg)]
+[![OS badge](https://img.shields.io/badge/OS-Debian-red.svg)](https://www.debian.org)
+[![Server badge](https://img.shields.io/badge/Server-Apache-blue.svg)](https://httpd.apache.org)
+[![Format badge](https://img.shields.io/badge/Format-HTML-green.svg)](https://lyty.dev/html/index.html)
 
 ## You need
 
@@ -58,12 +58,14 @@ a2ensite helloworld_ws.conf
 systemctl restart apache2
 ```
 
-## Hello World Script
-
+## File Script
+Write root's file in HTML. The name is index.html
 ```
 rm /home/helloworld/index.html
 echo '<html><body>Hello World!</body></html>' >> /home/helloworld/index.html
 ```
 
 ## Hello World Success
+Open browser and go to page http://hello-world.hephaiscode.com 
 
+![Success](https://img.shields.io/badge/Hello%20World-OK-Green.svg)
