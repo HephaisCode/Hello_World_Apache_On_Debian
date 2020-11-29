@@ -64,6 +64,7 @@ a2enmod ssl
 a2enmod userdir
 a2enmod suexec
 a2enmod http2
+
 systemctl restart apache2
 
 ```
@@ -76,6 +77,7 @@ sed -i 's/^.*ServerSignature .*$//g' /etc/apache2/apache2.conf
 sed -i '$ a ServerSignature Off' /etc/apache2/apache2.conf
 sed -i 's/^.*SSLProtocol .*$//g' /etc/apache2/apache2.conf
 sed -i '$ a SSLProtocol all -SSLv2 -SSLv3 -TLSv1 -TLSv1.1' /etc/apache2/apache2.conf
+
 systemctl restart apache2
 
 ```
@@ -97,6 +99,7 @@ echo 'ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-
 echo 'CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '</IfModule>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+
 a2dissite 000-default-le-ssl.conf
 
 rm /etc/apache2/sites-available/000-default.conf
@@ -106,9 +109,11 @@ echo 'DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default.co
 echo 'ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default.conf
 echo 'CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default.conf
 echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
+
 a2ensite 000-default.conf
 
 systemctl restart apache2
+
 ```
 
 Test Apache 
@@ -126,8 +131,11 @@ apt-get -y install php7.3-fpm
 a2dismod php7.3
 a2enconf php7.3-fpm
 a2enmod proxy_fcgi
+
 echo "<?php echo phpinfo();?>" > /var/www/html/phpinfo.php
+
 systemctl restart apache2
+
 ```
 
 Test Apache 
@@ -154,6 +162,7 @@ echo ${MYUSER}:${MYPASSWORD} | chpasswd
 mkdir /home/${MYUSER}
 chown root /home/${MYUSER}
 chmod go-w /home/${MYUSER}
+
 ```
 
 Add directories
@@ -181,6 +190,7 @@ echo '<?php echo phpinfo();?>' >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/phpinfo.php
 echo '<html><body>Hello World! You are secure!</body></html>' >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/index.html
 chown -R ${MYUSER}:www-data /home/${MYUSER}/${MYWEBFOLDER}_SSL
 chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_SSL
+
 ```
 
 ## Install Domain Name
@@ -208,9 +218,10 @@ echo "LogLevel error" >> ${MYAPACHECONFNOSSL}
 echo "ErrorLog /var/log/apache2/${MYDOMAINNAME}-nossl-error.log" >> ${MYAPACHECONFNOSSL}
 echo "CustomLog /var/log/apache2/${MYDOMAINNAME}-nossl-access.log combined env=NoLog" >> ${MYAPACHECONFNOSSL}
 echo "</VirtualHost>" >> ${MYAPACHECONFNOSSL}
-a2ensite ${MYDOMAINNAME}_NOSSL.conf
-systemctl restart apache2
 
+a2ensite ${MYDOMAINNAME}_NOSSL.conf
+
+systemctl restart apache2
 
 MYAPACHECONFSSL=/etc/apache2/sites-available/${MYDOMAINNAME}_SSL.conf
 rm ${MYAPACHECONFSSL}
@@ -238,8 +249,11 @@ echo "SSLCertificateFile /home/${MYUSER}/ssl/${MYDOMAINNAME}.crt" >> ${MYAPACHEC
 echo "SSLCertificateKeyFile /home/${MYUSER}/ssl/${MYDOMAINNAME}.key" >> ${MYAPACHECONFSSL}
 echo "</VirtualHost>" >> ${MYAPACHECONFSSL}
 echo "</IfModule>" >> ${MYAPACHECONFSSL}
+
 a2ensite ${MYDOMAINNAME}_SSL.conf
+
 systemctl restart apache2
+
 ```
 
 ## Add ssl certificat by Certbot
