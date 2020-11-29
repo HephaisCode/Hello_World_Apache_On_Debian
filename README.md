@@ -1,6 +1,9 @@
 # Hello World Apache On Debian
+[![OS badge](https://img.shields.io/badge/OS-Debian-red.svg)]
+[![Server badge](https://img.shields.io/badge/Server-Apache-blue.svg)]
+[![Format badge](https://img.shields.io/badge/Format-HTML-blue.svg)]
 
-You need : 
+## You need
 
 - Server on Debian (linux distribution) with root access
 - DN (Domain Name) point on Server IP (example hello-world.hephaiscode.com on 51.83.45.10)
@@ -28,8 +31,6 @@ apt-get -y dist-upgrade
 apt-get -y install apache2
 systemctl restart apache2
 ```
-
-## Install PHP
 
 ## Install Domain Name
 ```
@@ -65,3 +66,4 @@ echo '<html><body>Hello World!</body></html>' >> /home/helloworld/index.html
 ```
 
 ## Hello World Success
+
