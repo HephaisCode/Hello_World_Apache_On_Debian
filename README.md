@@ -1,6 +1,9 @@
-# Hello World Apache On Debian
+# "Hello World!" with Apache PHP and cerbot on Debian 10
+
 [![OS badge](https://img.shields.io/badge/OS-Debian-red.svg)](https://www.debian.org)
 [![Server badge](https://img.shields.io/badge/Server-Apache-blue.svg)](https://httpd.apache.org)
+[![SSL badge](https://img.shields.io/badge/SSL-certbot-blue.svg)](https://certbot.eff.org)
+[![Language badge](https://img.shields.io/badge/Language-PHP-blue.svg)](https://php.net)
 [![Format badge](https://img.shields.io/badge/Format-HTML-green.svg)](https://lyty.dev/html/index.html)
 
 ## Objectif 
