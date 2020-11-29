@@ -101,9 +101,9 @@ chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 
 
 mkdir /home/${MYUSER}/ssl
-openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /home/${MYUSER}/ssl/${MYDOMAINNAME}.key -out /home/${MYUSER}/ssl/${MYUSER}.crt -subj "/C=FR/ST=LILLE/L=LILLE/O=Global Security/OU=IT Department/CN=${MYUSER}"
-chown -R ${MYUSER}:www-data /home/${MYUSER}/ssl",
-chmod -R 750 /home/${MYUSER}/ssl",
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /home/${MYUSER}/ssl/${MYDOMAINNAME}.key -out /home/${MYUSER}/ssl/${MYDOMAINNAME}.crt -subj "/C=FR/ST=LILLE/L=LILLE/O=Global Security/OU=IT Department/CN=${MYUSER}"
+chown -R ${MYUSER}:www-data /home/${MYUSER}/ssl
+chmod -R 750 /home/${MYUSER}/ssl
 
 mkdir /home/${MYUSER}/${MYWEBFOLDER}_SSL
 echo "<?php echo phpinfo();?>" >> /home/${MYUSER}/${MYWEBFOLDER}_SSL/phpinfo.php
@@ -153,7 +153,7 @@ echo "DocumentRoot /home/${MYUSER}/${MYWEBFOLDER}_SSL" >> ${MYAPACHECONFSSL}
 echo "<Directory />" >> ${MYAPACHECONFSSL}
 echo "AllowOverride All" >> ${MYAPACHECONFSSL}
 echo "</Directory>" >> ${MYAPACHECONFSSL}
-echo "<Directory /home/${MYUSER}/${MYWEBFOLDER}_SSL" >> ${MYAPACHECONFSSL}
+echo "<Directory /home/${MYUSER}/${MYWEBFOLDER}_SSL>" >> ${MYAPACHECONFSSL}
 echo "Options Indexes FollowSymLinks MultiViews" >> ${MYAPACHECONFSSL}
 echo "AllowOverride all" >> ${MYAPACHECONFSSL}
 echo "Require all granted" >> ${MYAPACHECONFSSL}
