@@ -58,7 +58,7 @@ a2enmod userdir
 a2enmod suexec
 a2enmod http2
 systemctl restart apache2
-sed -i 's/\\/var\\/www/\\/home/g' /etc/apache2/suexec/www-data
+sed -i 's/\/var\/www/\/home/g' /etc/apache2/suexec/www-data
 sed -i 's/^.*ServerSignature .*$//g' /etc/apache2/apache2.conf
 sed -i '$ a ServerSignature Off' /etc/apache2/apache2.conf
 sed -i 's/^.*SSLProtocol .*$//g' /etc/apache2/apache2.conf
