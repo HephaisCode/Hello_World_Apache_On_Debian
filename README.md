@@ -94,6 +94,10 @@ chmod 750 /var/www/html/
 
 echo "<html><body>Are you lost? Ok, I'll help you, you're in front of a screen...</body></html>" > /var/www/html/index.html
 
+mkdir /var/www/ssl
+
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /var/www/ssl/apache.key -out /var/www/ssl/apache.crt -subj "/C=FR/ST=KNOWHERE/L=KNOWHERE/O=Global Security/OU=IT Department/CN=Apache"
+
 rm /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '<IfModule mod_ssl.c>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '<VirtualHost *:443>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
@@ -101,10 +105,14 @@ echo 'ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-defau
 echo 'DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 echo 'ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 echo 'CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo "SSLEngine On" /etc/apache2/sites-available/000-default-le-ssl.conf
+echo 'SSLCipherSuite ALL:!DH:!EXPORT:!RC4:+HIGH:+MEDIUM:!LOW:!aNULL:!eNULL' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo "SSLCertificateFile /var/www/ssl/apache.crt" >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo "SSLCertificateKeyFile /var/www/ssl/apache.key" >> /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '</IfModule>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 
-a2dissite 000-default-le-ssl.conf
+a2ensite 000-default-le-ssl.conf
 
 rm /etc/apache2/sites-available/000-default.conf
 echo '<VirtualHost *:80>' >> /etc/apache2/sites-available/000-default.conf
@@ -177,6 +185,7 @@ Add directories
 mkdir /home/${MYUSER}/
 
 mkdir /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
+
 rm /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
 echo '<?php echo phpinfo();?>' >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
 rm /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
