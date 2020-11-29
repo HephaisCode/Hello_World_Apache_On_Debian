@@ -47,11 +47,11 @@ apt-get -y dist-upgrade
 Install Apache as WebServer to communicate with your server at **hello-world.hephaiscode.com **
 
 ```
-apt-get -y install openssl
 apt-get -y install apache2
 apt-get -y install apache2-doc
 apt-get -y install apache2-suexec-custom
 apt-get -y install logrotate
+apt-get -y install openssl
 systemctl restart apache2
 ```
 
@@ -88,22 +88,22 @@ echo "<html><body>Are you lost? Ok, I'll help you, you're in front of a screen..
 
 rm /etc/apache2/sites-available/000-default-le-ssl.conf
 echo '<IfModule mod_ssl.c>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
-echo '$ a <VirtualHost *:443>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
-echo '$ a ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-default-le-ssl.conf
-echo '$ a DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default-le-ssl.conf
-echo '$ a ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default-le-ssl.conf
-echo '$ a CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default-le-ssl.conf
-echo '$ a </VirtualHost>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
-echo '$ a </IfModule>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '<VirtualHost *:443>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo 'ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo 'DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo 'ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo 'CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
+echo '</IfModule>' >> /etc/apache2/sites-available/000-default-le-ssl.conf
 a2dissite 000-default-le-ssl.conf
 
 rm /etc/apache2/sites-available/000-default.conf
-echo ''$ a <VirtualHost *:80>' >> /etc/apache2/sites-available/000-default.conf
-echo ''$ a ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-default.conf
-echo ''$ a DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default.conf
-echo ''$ a ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default.conf
-echo ''$ a CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default.conf
-echo ''$ a </VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
+echo '<VirtualHost *:80>' >> /etc/apache2/sites-available/000-default.conf
+echo 'ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-default.conf
+echo 'DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default.conf
+echo 'ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default.conf
+echo 'CustomLog ${APACHE_LOG_DIR}/access.log combined' >> /etc/apache2/sites-available/000-default.conf
+echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
 a2ensite 000-default.conf
 
 systemctl restart apache2
@@ -141,8 +141,10 @@ Add directories
 mkdir /home/${MYUSER}/
 
 mkdir /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
+rm /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
 echo "<?php echo phpinfo();?>" >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/phpinfo.php
-echo "Hello World! You are NOT secure! Please use SSL connexion!" >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
+rm /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
+echo '<html><body>Hello World! You are NOT secure! Please use <a href="https://hello-world.hephaiscode.com">SSL connexion</a>!' >> /home/${MYUSER}/${MYWEBFOLDER}_NOSSL/index.html
 chown -R ${MYUSER}:www-data /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 
