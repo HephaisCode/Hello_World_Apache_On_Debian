@@ -169,9 +169,10 @@ echo '<html><body>Hello World! You are NOT secure! Please use <a href="https://h
 chown -R ${MYUSER}:www-data /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 chmod -R 750 /home/${MYUSER}/${MYWEBFOLDER}_NOSSL
 
-
 mkdir /home/${MYUSER}/ssl
-openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /home/${MYUSER}/ssl/${MYDOMAINNAME}.key -out /home/${MYUSER}/ssl/${MYDOMAINNAME}.crt -subj "/C=FR/ST=KNOWHERE/L=KNOWHERE/O=Global Security/OU=IT Department/CN=${MYUSER}"
+
+openssl req -x509 -sha256 -nodes -days 365 -newkey rsa:2048 -keyout /home/${MYUSER}/ssl/${MYDOMAINNAME}.key -out /home/${MYUSER}/ssl/${MYDOMAINNAME}.crt -subj "/C=FR/ST=KNOWHERE/L=KNOWHERE/O=Global Security/OU=IT Department/CN=${MYDOMAINNAME}"
+
 chown -R ${MYUSER}:www-data /home/${MYUSER}/ssl
 chmod -R 750 /home/${MYUSER}/ssl
 
@@ -245,7 +246,9 @@ systemctl restart apache2
 
 ```
 apt-get -y install certbot python-certbot-apache
+
 certbot --agree-tos -n --no-eff-email --apache --redirect --email ${MYEMAIL} -d ${MYDOMAINNAME}
+
 systemctl restart apache2
 
 ```
